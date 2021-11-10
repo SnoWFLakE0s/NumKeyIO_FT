@@ -1,6 +1,7 @@
 <!--Variables list powers the processing logic-->
 <Variables>
   <!--buttonOn detects if buttonValue is changed, and if that is true, sets buttonOn to 1 (true)-->
+  <!--IMPORTANT: the button to be used with the keyCounter program should have an inputId="buttonValue", and outputValue that is non-zero value.-->
   <Setter variable="buttonOn" function="1" priority="0" activator="buttonValue != 0">
   <!--pressCount is incremented by 1 (this can be changed) if buttonOn is 1 (true), that is, when a button is pressed-->
   <Setter variable="pressCount" function="pressCount + 1" priority="0" activator="buttonOn = 1">
