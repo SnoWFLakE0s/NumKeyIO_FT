@@ -1,0 +1,12 @@
+<!--Variables list powers the processing logic-->
+<Variables>
+  <!--buttonOn detects if buttonValue is changed, and if that is true, sets buttonOn to 1 (true)-->
+  <Setter variable="buttonOn" function="1" priority="0" activator="buttonValue != 0">
+  <!--pressCount is incremented by 1 (this can be changed) if buttonOn is 1 (true), that is, when a button is pressed-->
+  <Setter variable="pressCount" function="pressCount + 1" priority="0" activator="buttonOn = 1">
+  
+  <!--Passive reset variables: these run at the end of every evaluation cycle-->
+  <!--Both buttonOn and buttonValue are set to 0 (false), which allows for the code to detect another button press if it happens again in the next frame-->
+  <Setter variable="buttonValue" function="0" priority="1">
+  <Setter variable="buttonOn" function="0" priority="1">
+</Variables>
