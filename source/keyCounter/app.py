@@ -4,7 +4,7 @@ import os
 from os import *
 from tkinter import filedialog
 from tkinter.filedialog import Directory
-from xml.etree.ElementTree import ElementTree as ET
+import xml.etree.ElementTree as ET
 
 root = tk.Tk()
 root.title("SnoW Variable Package Installer v0.1")
@@ -21,7 +21,7 @@ def addFile():
     #Add the file directory to the file directory array
     aircraftFileDirectory.append(fileDirectory)
     #Print the file directory array to the entry field
-    ent_fileDirectory.insert(0, aircraftFileDirectory)
+    ent_fileDirectory.insert(0, aircraftFileDirectory[0])
 
 def clearDirectory():
     #Empty entry field
@@ -29,21 +29,13 @@ def clearDirectory():
     #Empty file directory array
     aircraftFileDirectory.clear()
 
-#XML Stuff
-tree = ET(file=aircraftFileDirectory)
-xmlRoot = tree.getroot()
-
-variable="buttonOn"
-function = "1"
-priority = "0"
-activator = "buttonValue != 0"
-
-#.find not working??
 def installPackage():
-    for setter in xmlRoot.find("./Variables"):
-        setter.set(variable, function, priority, activator)
-    tree.write(aircraftFileDirectory)
-
+    #XML Stuff
+    tree = ET.parse(str(aircraftFileDirectory[0]))
+    Aircraft = tree.getroot()
+    Variables = Aircraft.find('Variables')
+    Setter = ET.SubElement(Variables, 'Setter')
+    
 frm_main = tk.Frame(master=root, bg="#2f3136", padx=20, pady=20)
 
 frm_selectFile = tk.Frame(master=frm_main, bg="#2f3136")
