@@ -29,12 +29,31 @@ def clearDirectory():
     #Empty file directory array
     aircraftFileDirectory.clear()
 
+#Variable Package
+variable = ["buttonOn", "pressCount", "buttonValue", "buttonOn"]
+func = ["1", "pressCount + 1", "0", "0"]
+priority = ["0", "0", "1", "1"]
+activator = ["buttonValue != 0", "buttonOn = 1", "", ""]
+
+installationState = "Pending"
+
 def installPackage():
     #XML Stuff
     tree = ET.parse(str(aircraftFileDirectory[0]))
     Aircraft = tree.getroot()
     Variables = Aircraft.find('Variables')
-    Setter = ET.SubElement(Variables, 'Setter')
+    for i in range(4):
+        Setter = ET.SubElement(
+            Variables, 
+            'Setter',
+            attrib={
+                'variable': variable[i],
+                'function': func[i],
+                'priority': priority[i],
+                'activator': activator[i]
+                })
+    tree.write(aircraftFileDirectory[0])
+    lbl_status.config(text="Installation Status: Success", fg="lightgreen")
     
 frm_main = tk.Frame(master=root, bg="#2f3136", padx=20, pady=20)
 
@@ -50,6 +69,7 @@ frm_installPackage = tk.Frame(master=frm_main, bg="#2f3136")
 frm_installPackage.grid(row=1, column=0, sticky="news")
 btn_installPackage = tk.Button(master=frm_installPackage, text="Install Variable Package", padx=10, pady=5, width=20, bg="#375a7f", fg="white", command=installPackage)
 btn_installPackage.grid(row=0, column=0)
+
 lbl_status = tk.Label(master=frm_installPackage, text="Installation Status: Pending", pady=5, width=64, bg="#2f3136", fg="white")
 lbl_status.grid(row=0, column=1, sticky="news", padx=(10,0))
 
